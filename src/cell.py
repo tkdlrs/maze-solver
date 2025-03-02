@@ -15,6 +15,9 @@ class Cell:
         self._win = win 
         #
     def draw(self, x1, y1, x2, y2):
+       if self._win is None:
+          return
+       #
        self._x1 = x1 
        self._x2 = x2
        self._y1 = y1 
@@ -37,10 +40,6 @@ class Cell:
           self._win.draw_line(line)
        #
     def draw_move(self, to_cell, undo=False):
-       #
-       color = "red"
-       if undo == True:
-          color = "gray"
        # Figure midpoints
        self_x_delta = abs( self._x1 + self._x2 )
        self_mid_x = self_x_delta / 2 
@@ -51,10 +50,13 @@ class Cell:
        to_mid_x = to_x_delta / 2
        to_y_delta = abs( to_cell._y1 + to_cell._y2 )
        to_mid_y = to_y_delta / 2
-       #
 
        #
+       fill_color = "red"
+       if undo == True:
+           fill_color = "gray"
+       #
        line = Line(Point(self_mid_x, self_mid_y), Point(to_mid_x, to_mid_y) )
-       self._win.draw_line(line, fill_color=color)
+       self._win.draw_line(line, fill_color)
     #
 #
