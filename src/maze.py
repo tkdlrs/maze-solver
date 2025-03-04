@@ -2,7 +2,7 @@ import time
 from cell import Cell 
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None):
         self._cells = []
         #
         self._x1 = x1
@@ -34,7 +34,6 @@ class Maze:
     def _draw_cell(self, i, j):
         # guard clause
         if self._win is None:
-            print("Error, self.win can not be None.")
             return
         #
         tl_x = self._x1 + (i * self._cell_size_x)
@@ -50,7 +49,6 @@ class Maze:
     def _animate(self):
        # guard clause
         if self._win is None:
-            print("Error, self.win can not be None.")
             return 
         self._win.redraw()
         time.sleep(0.05)
