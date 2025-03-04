@@ -26,18 +26,30 @@ class Cell:
        if self.has_top_wall:
            line = Line(Point(x1, y1), Point(x2, y1))
            self._win.draw_line(line)
+       else:
+         line = Line(Point(x1, y1), Point(x2, y1))
+         self._win.draw_line(line, fill_color="white")
        #
        if self.has_right_wall:
           line = Line(Point(x2, y1), Point(x2, y2))
           self._win.draw_line(line)
+       else:
+          line = Line(Point(x2, y1), Point(x2, y2))
+          self._win.draw_line(line, fill_color="white")
        #
        if self.has_bottom_wall:
           line = Line(Point(x1, y2), Point(x2, y2))
           self._win.draw_line(line)
+       else:
+         line = Line(Point(x1, y2), Point(x2, y2))
+         self._win.draw_line(line, fill_color="white")
        #
        if self.has_left_wall:
           line = Line(Point(x1, y1), Point(x1, y2))
           self._win.draw_line(line)
+       else:
+          line = Line(Point(x1, y1), Point(x1, y2))
+          self._win.draw_line(line, fill_color="white")
        #
     def draw_move(self, to_cell, undo=False):
        # Figure midpoints ~this part is different from what they did in the guided-project. Should still work. 
