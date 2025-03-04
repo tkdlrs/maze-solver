@@ -40,7 +40,7 @@ class Cell:
           self._win.draw_line(line)
        #
     def draw_move(self, to_cell, undo=False):
-       # Figure midpoints
+       # Figure midpoints ~this part is different from what they did in the guided-project. Should still work. 
        self_x_delta = abs( self._x1 + self._x2 )
        self_mid_x = self_x_delta / 2 
        self_y_delta = abs( self._y1 + self._y2 )
