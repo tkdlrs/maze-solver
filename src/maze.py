@@ -92,7 +92,7 @@ class Maze:
                 return
             
             # randomly choose and go to the next
-            direction_index = random.ranrange(len(next_index_list))
+            direction_index = random.randrange(len(next_index_list))
             next_index = next_index_list[direction_index]
 
             # remove walls between current and next
