@@ -1,9 +1,14 @@
 import time 
+import random
+
 from cell import Cell 
 
 class Maze:
-    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None):
+    def __init__(self, x1, y1, num_rows, num_cols, cell_size_x, cell_size_y, win=None, seed=None):
         self._cells = []
+         
+        if seed:
+            random.seed(seed)
         #
         self._x1 = x1
         self._y1 = y1
@@ -14,8 +19,8 @@ class Maze:
         self._win = win
         #
         self._create_cells()
-        #
         self._break_entrance_and_exit()
+        self._break_walls_r(0, 0)
         #
     #
     def _create_cells(self):
@@ -62,4 +67,54 @@ class Maze:
         self._cells[self._num_cols - 1][self._num_rows - 1].has_bottom_wall = False
         self._draw_cell((self._num_cols - 1), (self._num_rows - 1))
 
+    def _break_walls_r(self, i, j):
+        self._cells[i][j].visited = True
+        #
+        while True:
+            next_index_list = []
+            # determine which cell(s) to visit next
+            # top
+            if j > 0 and not self._cells[i][j - 1].visited:
+                next_index_list.append((i, j - 1))
+            # right
+            if i < self._num_cols - 1 and not self._cells[i + 1][j].visited:
+                next_index_list.append((i + 1, j))
+            # bottom
+            if j < self._num_rows - 1 and not self._cells[i][j + 1].visited:
+                next_index_list.append((i, j + 1))
+            # left 
+            if i > 0 and not self._cells[i - 1][j].visited:
+                next_index_list.append((i - 1, j))
+            
+            # if there is no where to go escape the loop.
+            if len(next_index_list) == 0:
+                self._draw_cell(i, j)
+                return
+            
+            # randomly choose and go to the next
+            direction_index = random.ranrange(len(next_index_list))
+            next_index = next_index_list[direction_index]
+
+            # remove walls between current and next
+            # top
+            if next_index[0] == j - 1:
+                self._cells[j][j].has_top_wall = False
+                self._cells[j][j - 1].has_bottom_wall = False
+            # right
+            if next_index[0] == i + 1:
+                self._cells[i][j].has_right_wall = False
+                self._cells[i + 1][j].has_left_wall = False
+            # bottom
+            if next_index[0] == j + 1:
+                self._cells[i][j].has_bottom_wall = False
+                self._cells[i][j + 1].has_top_wall = False
+            # left
+            if next_index[0] == i - 1:
+                self._cells[i][j].has_left_wall = False
+                self._cells[i - 1][j].has_right_wall = False
+            
+            # visit next
+            self._break_walls_r(next_index[0], next_index[1])
+
+        #
     #
