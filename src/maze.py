@@ -138,6 +138,8 @@ class Maze:
         # found the end
         if self._cells[i][j] == self._cells[self._num_cols - 1][self._num_rows - 1]:
             return True
+        if i == self._num_cols - 1 and j == self._num_rows - 1:
+            return True 
         # 
         # determine next cell(s) 
         # top
@@ -167,8 +169,8 @@ class Maze:
             if self._solve_r(i - 1, j):
                 return True 
             else:
-                self._cells[i][j].draw_move(self._cells[i - 1][j])
-                
+                self._cells[i][j].draw_move(self._cells[i - 1][j], True)
+
         # I don't think any direction worked out. So return false...
         # if j > 0 and j < self._num_rows - 1 and i > 0 and i < self._num_cols - 1 and self._cells[][]
         return False
